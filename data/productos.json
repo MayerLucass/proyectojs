@@ -1,0 +1,29 @@
+[
+{
+"id":1,
+"nombre":"Teclado Gamer",
+"precio":15000,
+"imagen":"img/teclado.jpg"
+},
+
+{
+"id":2,
+"nombre":"Mouse Gamer",
+"precio":8000,
+"imagen":"img/mouse.jpg"
+},
+
+{
+"id":3,
+"nombre":"Monitor Gamer",
+"precio":120000,
+"imagen":"img/monitor.jpg"
+},
+
+{
+"id":4,
+"nombre":"Auriculares Gamer",
+"precio":20000,
+"imagen":"img/auriculares.jpg"
+}
+]

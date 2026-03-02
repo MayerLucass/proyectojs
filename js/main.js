@@ -1,60 +1,245 @@
-// Constantes y arrays
-const productos = [
-    { nombre: "Mouse", precio: 5000 },
-    { nombre: "Teclado", precio: 8000 },
-    { nombre: "Auriculares", precio: 12000 }
-];
+// DOM
 
-let carrito = [];
+const contenedorProductos = document.getElementById("contenedor-productos");
 
-// Función 1 → mostrar productos (salida)
-function mostrarProductos() {
-    console.log("Productos disponibles:");
-    for (let i = 0; i < productos.length; i++) {
-        console.log(
-            i + 1 + " - " + productos[i].nombre + 
-            " $" + productos[i].precio
-        );
-    }
-}
+const contenedorCarrito = document.getElementById("contenedor-carrito");
 
-// Función 2 → agregar producto (entrada + proceso)
-function agregarProducto() {
-    let opcion = prompt(
-        "Ingrese el número del producto que desea comprar:\n" +
-        "1 - Mouse\n2 - Teclado\n3 - Auriculares"
-    );
+const contadorCarrito = document.getElementById("contador-carrito");
 
-    if (opcion >= 1 && opcion <= productos.length) {
-        carrito.push(productos[opcion - 1]);
-        alert("Producto agregado al carrito");
-    } else {
-        alert("Opción inválida");
-    }
-}
+const totalCarrito = document.getElementById("total-carrito");
 
-// Función 3 → calcular total (proceso + salida)
-function calcularTotal() {
-    let total = 0;
+const mensajeVacio = document.getElementById("mensaje-vacio");
 
-    for (let i = 0; i < carrito.length; i++) {
-        total += carrito[i].precio;
-    }
+const botonVaciar = document.getElementById("btn-vaciar");
 
-    alert("El total de su compra es: $" + total);
-}
 
-// Programa principal
-alert("Bienvenido al simulador de compras");
+// ARRAYS
+
+let productos = [];
+
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+
+
+
+// CARGAR PRODUCTOS DESDE JSON
+
+fetch("data/productos.json")
+
+.then(res => res.json())
+
+.then(data => {
+
+productos = data;
 
 mostrarProductos();
 
-let continuar = true;
+});
 
-while (continuar) {
-    agregarProducto();
-    continuar = confirm("¿Desea agregar otro producto?");
+
+
+
+// MOSTRAR PRODUCTOS
+
+function mostrarProductos(){
+
+
+contenedorProductos.innerHTML = "";
+
+
+productos.forEach(producto => {
+
+
+const card = document.createElement("div");
+
+card.className = "card";
+
+
+card.innerHTML = `
+
+
+<img src="${producto.imagen}">
+
+
+<h3>${producto.nombre}</h3>
+
+
+<p>$${producto.precio}</p>
+
+
+<button onclick="agregarAlCarrito(${producto.id})">
+
+
+Agregar al carrito
+
+
+</button>
+
+
+`;
+
+
+contenedorProductos.appendChild(card);
+
+
+});
+
+
 }
 
-calcularTotal();
-console.log("Carrito final:", carrito);
+
+
+
+// AGREGAR AL CARRITO
+
+function agregarAlCarrito(id){
+
+
+const producto = productos.find(p => p.id === id);
+
+
+carrito.push(producto);
+
+
+guardarStorage();
+
+
+mostrarCarrito();
+
+
+}
+
+
+
+
+// MOSTRAR CARRITO
+
+function mostrarCarrito(){
+
+
+contenedorCarrito.innerHTML = "";
+
+
+contadorCarrito.innerText = carrito.length;
+
+
+let total = 0;
+
+
+if(carrito.length === 0){
+
+mensajeVacio.style.display = "block";
+
+}
+
+else{
+
+mensajeVacio.style.display = "none";
+
+}
+
+
+
+carrito.forEach((producto, index) => {
+
+
+const card = document.createElement("div");
+
+card.className = "card";
+
+
+card.innerHTML = `
+
+
+<img src="${producto.imagen}">
+
+
+<h4>${producto.nombre}</h4>
+
+
+<p>$${producto.precio}</p>
+
+
+<button onclick="eliminarProducto(${index})">
+
+
+Eliminar
+
+
+</button>
+
+
+`;
+
+
+contenedorCarrito.appendChild(card);
+
+
+total += producto.precio;
+
+
+});
+
+
+totalCarrito.innerText = total;
+
+
+}
+
+
+
+
+// ELIMINAR
+
+function eliminarProducto(index){
+
+
+carrito.splice(index, 1);
+
+
+guardarStorage();
+
+
+mostrarCarrito();
+
+
+}
+
+
+
+
+// VACIAR
+
+botonVaciar.addEventListener("click", () => {
+
+
+carrito = [];
+
+
+guardarStorage();
+
+
+mostrarCarrito();
+
+
+});
+
+
+
+
+// STORAGE
+
+function guardarStorage(){
+
+
+localStorage.setItem("carrito", JSON.stringify(carrito));
+
+
+}
+
+
+
+
+// INICIO
+
+mostrarCarrito();

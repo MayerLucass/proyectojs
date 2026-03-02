@@ -1,31 +1,123 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Simulador de Compras</title>
 
-    <link rel="stylesheet" href="css/styles.css">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Simulador Tienda Gamer | Lucas Mayer</title>
+
+<link rel="stylesheet" href="./css/styles.css">
+
 </head>
+
+
 <body>
 
-    <div class="container">
-        <h1>🛒 Simulador de Compras</h1>
 
-        <p>
-            Este simulador permite al usuario seleccionar productos desde la consola
-            utilizando cuadros de diálogo de JavaScript. A través de prompts y alerts,
-            se procesan las elecciones y se calcula el total de la compra.
-        </p>
+<header class="header">
 
-        <p>
-            Toda la interacción se realiza mediante la consola y ventanas emergentes.
-        </p>
 
-        <span class="hint">
-            👉 Abrí la consola para ver los productos disponibles
-        </span>
-    </div>
+<div>
 
-    <script src="js/main.js"></script>
+<h1>🎮 Tienda Gamer</h1>
+
+<p>Simulador de carrito de compras</p>
+
+</div>
+
+
+
+<div class="carrito-header">
+
+
+<h3>🛒 Carrito</h3>
+
+
+<p>
+
+Productos:
+
+<span id="contador-carrito">0</span>
+
+</p>
+
+
+<p>
+
+Total: $
+
+<span id="total-carrito">0</span>
+
+</p>
+
+
+<button id="btn-vaciar">
+
+Vaciar carrito
+
+</button>
+
+
+</div>
+
+
+</header>
+
+
+
+<main>
+
+
+<h2 class="titulo">
+
+Productos disponibles
+
+</h2>
+
+
+<div id="contenedor-productos" class="grid">
+
+</div>
+
+
+
+<h2 class="titulo">
+
+Detalle del carrito
+
+</h2>
+
+
+<div id="contenedor-carrito" class="grid">
+
+</div>
+
+
+<p id="mensaje-vacio">
+
+El carrito está vacío
+
+</p>
+
+
+</main>
+
+
+
+<footer>
+
+Simulador JavaScript - Lucas Mayer
+
+</footer>
+
+
+
+<script src="./js/main.js"></script>
+
+
 </body>
+
 </html>
